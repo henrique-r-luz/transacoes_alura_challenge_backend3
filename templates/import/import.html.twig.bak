@@ -1,0 +1,39 @@
+{# templates/blog/layout.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}
+  APP
+{% endblock %}
+{% block body %}
+  <div class="container" style="padding-top:10px;">
+    <div class="card">
+      <div class="card-header">
+        Upload Arquivo
+      </div>
+      <div class="card-body">
+        <div>
+          <form action='upload'
+            method="POST"
+            enctype="multipart/form-data">
+            <div class="row">
+            <div class="col">
+            <input class="form-control form-control-lg"
+              id="formFileLg"
+              type="file" />
+            </div>
+            <div class="col col-lg-1">
+              <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:10px;">
+      <div class="card-header">
+        Lista de transações
+      </div>
+      <div class="card-body"></div>
+    </div>
+  </div>
+{% endblock %}
