@@ -1,0 +1,25 @@
+{{
+  form_start(
+    form,
+    {
+      action: 'upload'
+    }
+  )
+}}
+<div class="card">
+  <div class="card-header">
+    Upload Arquivo de transações
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        {{ form_widget(form.arquivo,{'attr':{'class':'form-control form-control-lg'}}) }}
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+     {{ form_widget(form.upload,{'attr':{'class':'btn btn-primary'}}) }}
+     <a class="btn btn-secondary" href="/">Limpar</a>
+  </div>
+</div>
+{{ form_end(form) }}

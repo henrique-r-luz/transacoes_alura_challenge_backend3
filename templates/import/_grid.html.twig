@@ -1,0 +1,53 @@
+<div class="card" style="margin-top:10px;">
+  <div class="card-header">
+    Lista de Importações
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">
+            {{ knp_pagination_sortable(services, 'Id', 'id') }}
+          </th>
+          <th scope="col">
+            {{ knp_pagination_sortable(services, 'Data transação', 'data') }}
+          </th>
+          <th scope="col">
+            {{
+              knp_pagination_sortable(services, 'Data Importação', 'dataImport')
+            }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {# table body #}
+        {% for transacao in services %}
+          <tr>
+            <td>
+              {{ transacao.id }}
+            </td>
+            <td>
+              {{ transacao.dataGrid }}
+            </td>
+            <td>
+              {{ transacao.import.data }}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="row">
+      <div class="col">
+        <div class="pagination mt-3 d-flex justify-content-center">
+          {{
+            knp_pagination_render(
+              services,
+              '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig'
+            )
+          }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

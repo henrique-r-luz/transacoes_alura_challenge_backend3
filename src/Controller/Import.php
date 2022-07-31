@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use Exception;
+use App\Services\ImportLista;
 use App\Services\ImportServices;
 use App\Entity\ArquivoTransacoes;
 use App\Form\ArquivoTransacoesType;
@@ -15,13 +16,19 @@ class Import extends AbstractController
 {
 
     #[Route('/')]
-    public function import()
-    {
+    public function import(
+        ImportLista $importLista,
+        Request $request,
+    ) {
 
         $arquivoTransacoes = new ArquivoTransacoes();
         $form = $this->createForm(ArquivoTransacoesType::class, $arquivoTransacoes);
+        // $importLista->listaTodos();
+        //get importacões
         return $this->render('import/import.html.twig', [
             'form' => $form->createView(),
+            'services' => $importLista->dataProvider($request)
+           
         ]);
     }
 

@@ -2,19 +2,17 @@
 
 namespace App\Services;
 
+use App\Entity\Import;
 use Exception;
 use App\Entity\Transacao;
 use App\Entity\ContaBancaria;
 use App\Repository\Operacoes\Operacao;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Repository\Operacoes\ContaBancariaOperacao;
 
 
 class ImportServices
 {
-    //private $vetCsv = [];
     private $contaBanco;
-    private $transacao;
     private $doctrine;
 
     public function __construct(ManagerRegistry $doctrine)
@@ -42,13 +40,12 @@ class ImportServices
         }
         $this->doctrine->getConnection()->beginTransaction();
         try {
+            $importModel = $this->insereImport();
             foreach ($this->contaBanco as $item) {
                 $this->insereContaBancaria($item);
-                //$destino = $this->insereContaBancariaDestino($transacao);
-                //$this->insereContaBancariaTransacao($transacao, $origem, $destino);
             }
             foreach ($this->vetCsv as $item) {
-                $this->insereContaBancariaTransacao($item);
+                $this->insereContaBancariaTransacao($item,$importModel);
             }
             $this->doctrine->getConnection()->commit();
         } catch (Exception $e) {
@@ -68,7 +65,7 @@ class ImportServices
     }
 
 
-    private function insereContaBancariaTransacao($transacao)
+    private function insereContaBancariaTransacao($transacao,$importModel)
     {
         $contaBancariaRepository = $this->doctrine->getManager()->getRepository(ContaBancaria::class);
         $contaOrigem = $contaBancariaRepository->findOneBy([
@@ -84,9 +81,19 @@ class ImportServices
         $transacaoModel = new Transacao();
         $transacaoModel->setContaBancariaOrigem($contaOrigem);
         $transacaoModel->setContaBancariaDestino($contaDestino);
+        $transacaoModel->setImport($importModel);
         $transacaoModel->setData(new \DateTime($transacao[7]));
         $transacaoModel->setValor($transacao[6]);
         $operacao = new Operacao($this->doctrine);
         $operacao->save($transacaoModel);
     }
+
+    private function insereImport(){
+        $importModel = new Import();
+        $importModel->setData(new \DateTime());
+        $operacao = new Operacao($this->doctrine);
+        $operacao->save($importModel);
+        return $importModel;
+    }
+
 }

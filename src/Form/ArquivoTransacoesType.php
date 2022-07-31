@@ -21,6 +21,7 @@ class ArquivoTransacoesType extends AbstractType
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
+                //'class'=>'form-control form-control-lg',
 
                 // make it optional so you don't have to re-upload the PDF file
                 // every time you edit the Product details
