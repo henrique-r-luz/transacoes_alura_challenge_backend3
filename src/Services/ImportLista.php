@@ -11,7 +11,6 @@ use Doctrine\Persistence\ManagerRegistry;
 class ImportLista
 {
     private $paginator;
-    private $request;
     private $doctrine;
 
     public function __construct(
