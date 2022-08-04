@@ -5,7 +5,6 @@ namespace App\Services;
 
 use App\Entity\Transacao;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 
 class ImportLista
@@ -32,6 +31,7 @@ class ImportLista
 
 
     public function dataProvider($request){
-        return $this->paginate($this->doctrine->getRepository(Transacao::class)->findAll(),$request);
+        return $this->paginate($this->doctrine->getRepository(Transacao::class)->findAll()
+                             ,$request);
     }
 }

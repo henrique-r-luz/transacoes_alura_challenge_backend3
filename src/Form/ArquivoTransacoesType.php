@@ -34,8 +34,10 @@ class ArquivoTransacoesType extends AbstractType
                         'maxSize' => '1024k',
                         'mimeTypes' => [
                             'text/csv',
+                            'text/plain'
                         ],
                         'mimeTypesMessage' => 'Please upload a valid csv document. ',
+                        'disallowEmptyMessage'=>'O arquivo não pode ser vazio!'
                     ])
                 ],
             ])
