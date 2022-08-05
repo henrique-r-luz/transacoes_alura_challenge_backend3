@@ -3,9 +3,10 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TransacaoRepository;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
-#[ORM\Entity(repositoryClass: "App\Repository\TransacaoRepository")]
+#[ORM\Entity(repositoryClass: TransacaoRepository::class)]
 #[ORM\Table(name: "transacao")]
 #[UniqueConstraint(name: "unique_conta_origem_conta_destino_data", columns: ["conta_bancaria_origem_id","conta_bancaria_destino_id","data"])]
 

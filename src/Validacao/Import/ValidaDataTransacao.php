@@ -3,7 +3,6 @@
 namespace App\Validacao\Import;
 
 use App\Entity\transacao;
-use App\Helper\ArulaException;
 
 class ValidaDataTransacao
 {

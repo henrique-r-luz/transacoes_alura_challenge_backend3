@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Transacao;
 use App\Services\ImportLista;
 use App\Helper\ArulaException;
 use App\Services\ImportServices;
 use App\Entity\ArquivoTransacoes;
 use App\Form\ArquivoTransacoesType;
+use App\Validacao\Import\ValidaImport;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +22,11 @@ class Import extends AbstractController
         Request $request,
         ImportServices $importServices,
         ImportLista $importLista,
+        ManagerRegistry $doctrine
     ) {
+
+        $valida =  new ValidaImport(new Transacao(), $doctrine);
+        $valida->verificaTransacao();
         try {
             $arquivoTransacoes = new ArquivoTransacoes();
             $form = $this->createForm(ArquivoTransacoesType::class, $arquivoTransacoes);
