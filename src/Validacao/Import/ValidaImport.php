@@ -2,22 +2,21 @@
 
 namespace App\Validacao\Import;
 
+use DateTime;
 use App\Entity\Transacao;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 
 class ValidaImport
 {
-    private Transacao $transacao;
+    private DateTime $data;
     private $doctrine;
 
     public function __construct(
-        Transacao $transacao,
+        DateTime $data,
         ManagerRegistry $doctrine
     ) {
-        $this->transacao = $transacao;
+        $this->data = $data;
         $this->doctrine = $doctrine;
     }
 
@@ -28,19 +27,18 @@ class ValidaImport
         $query =  $sql->select(['transacao.id', 'transacao.data'])
             ->from('Transacao', 'transacao')
             ->where('cast(transacao.data as DATE) = :data')
-            ->setParameter('data', '2022-02-01')
+            ->setParameter('data', $this->data->format('Y-m-d'))
+            ->setMaxResults(1)
             ->execute()
             ->fetchAllAssociative();
-        
-        //$result = $resp->getQuery();    
-           // ->execute()
-           // ->fetchAllAssociative();
 
+        if (!empty($query)) {
+            return false;
+        }
+        return true;
+    }
 
-
-        print_r($query);
-
-        //  print_r($array);
-        exit();
+    public function getMessage(){
+        return 'A transação já foi importada.';
     }
 }

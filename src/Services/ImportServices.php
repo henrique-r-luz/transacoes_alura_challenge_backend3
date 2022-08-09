@@ -8,6 +8,7 @@ use App\Entity\Transacao;
 use App\Entity\ContaBancaria;
 use App\Helper\ArulaException;
 use App\Repository\Operacoes\Operacao;
+use App\Validacao\Import\ValidaImport;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Validacao\Import\ValidaDataTransacao;
 
@@ -30,6 +31,11 @@ class ImportServices
         $this->vetCsv = [];
         foreach ($arquivo as $line) {
             $linhaObj = str_getcsv($line);
+            foreach ($linhaObj as $colunas) {
+                if ($colunas == '') {
+                  continue 2;
+                }
+            }
             $this->contaBanco[$linhaObj[0] . $linhaObj[1] . $linhaObj[2]] = [$linhaObj[0], $linhaObj[1], $linhaObj[2]];
             $this->contaBanco[$linhaObj[3] . $linhaObj[4] . $linhaObj[5]] = [$linhaObj[3], $linhaObj[4], $linhaObj[5]];
             $this->vetCsv[] = $linhaObj;
@@ -41,6 +47,11 @@ class ImportServices
         if (empty($this->vetCsv)) {
             throw new ArulaException('A leitura do arquivo não foi realizada! ');
         }
+        $this->dataInicio = new \DateTime($this->vetCsv[0][7]);
+        $valida =  new ValidaImport($this->dataInicio, $this->doctrine);
+        if (!$valida->verificaTransacao()) {
+            throw new ArulaException($valida->getMessage());
+        }
         $this->doctrine->getConnection()->beginTransaction();
         try {
             $importModel = $this->insereImport();
@@ -48,9 +59,6 @@ class ImportServices
                 $this->insereContaBancaria($item);
             }
             foreach ($this->vetCsv as $id => $item) {
-                if ($id == 0) {
-                    $this->dataInicio = new \DateTime($item[7]);
-                }
                 $this->insereContaBancariaTransacao($item, $importModel);
             }
             $this->doctrine->getConnection()->commit();
@@ -99,8 +107,8 @@ class ImportServices
         $transacaoModel->setData(new \DateTime($transacao[7]));
         $transacaoModel->setValor($transacao[6]);
         $validaDataTransacao = new ValidaDataTransacao($transacaoModel, $this->dataInicio);
-        if(!$validaDataTransacao->valida()){
-            return ;
+        if (!$validaDataTransacao->valida()) {
+            return;
         }
         $operacao = new Operacao($this->doctrine);
         $operacao->save($transacaoModel);

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,11 +21,14 @@ class ContaBancaria
     private int $id;
 
     #[ORM\Column(type: "string")]
+    #[Assert\NotBlank]
     private String $nome_banco;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: "string")]
     private String $agencia;
     
+    #[Assert\NotBlank]
     #[ORM\Column(type: "string")]
     private String $conta;
 

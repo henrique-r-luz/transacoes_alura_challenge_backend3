@@ -67,6 +67,10 @@ class Transacao
         return $this->data->format('d/m/Y');
     }
 
+    public function getDataSql(){
+        return $this->data->format('Y-m-d');
+    }
+
 
     /**
      * Set the value of data
