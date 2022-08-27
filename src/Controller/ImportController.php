@@ -10,8 +10,9 @@ use App\Form\ArquivoTransacoesType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Throwable;
 
-class Import extends AbstractController
+class ImportController extends AbstractController
 {
 
     #[Route(path: '/', methods: ["POST", "GET"])]
@@ -40,6 +41,8 @@ class Import extends AbstractController
             }
         } catch (ArulaException $e) {
             $this->addFlash('danger', $e->getMessage());
+        } catch (Throwable $e) {
+            $this->addFlash('danger', 'Ocorreu um errro não esperado');
         }
         return $this->renderForm('import/import.html.twig', [
             'form' => $form,

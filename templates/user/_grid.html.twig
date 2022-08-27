@@ -1,0 +1,59 @@
+<a class="btn btn-primary" href="/user/create">Novo</a>
+<div class="card" style="margin-top:10px;">
+  <div class="card-header">
+    Lista de Usuários
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">
+            {{ knp_pagination_sortable(services, 'Id', 'id') }}
+          </th>
+          <th scope="col">
+            {{ knp_pagination_sortable(services, 'Nome', 'nome') }}
+          </th>
+          <th scope="col">
+            {{ knp_pagination_sortable(services, 'Email', 'email') }}
+          </th>
+          <th scope="col">
+            Ação
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {# table body #}
+        {% for user in services %}
+          <tr>
+            <td>
+              {{ user.id }}
+            </td>
+            <td>
+              {{ user.nome }}
+            </td>
+            <td>
+              {{ user.email }}
+            </td>
+            <td>
+              <a class="btn btn-sucess" href="/user/update">Editar</a>
+              <a class="btn btn-danger" href="/user/delte">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="row">
+      <div class="col">
+        <div class="pagination mt-3 d-flex justify-content-center">
+          {{
+            knp_pagination_render(
+              services,
+              '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig'
+            )
+          }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

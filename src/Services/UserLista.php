@@ -2,12 +2,11 @@
 
 namespace App\Services;
 
-
-use App\Entity\Transacao;
+use App\Entity\User;
 use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
-class ImportLista
+class UserLista
 {
     private $paginator;
     private $doctrine;
@@ -20,7 +19,7 @@ class ImportLista
         $this->doctrine = $doctrine;
     }
 
-    private function paginate($query,$request)
+    private function paginate($query, $request)
     {
         return $this->paginator->paginate(
             $query,
@@ -30,9 +29,12 @@ class ImportLista
     }
 
 
-    public function dataProvider($request){
-        $query = $this->doctrine->getRepository(Transacao::class)->findBy([],['data'=>'DESC']);
-        return $this->paginate($query
-                             ,$request);
+    public function dataProvider($request)
+    {
+        $query = $this->doctrine->getRepository(User::class)->findBy([], ['nome' => 'ASC']);
+        return $this->paginate(
+            $query,
+            $request
+        );
     }
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>
       {% block title %}
-        Welcome!
+        Transação App
       {% endblock %}
     </title>
     <link rel="icon"
@@ -26,8 +26,33 @@
     {% endblock %}
   </head>
   <body>
-    {% block body %}
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">Transação App</a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/user">Usuário</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% for message in app.flashes('danger') %}
+      <div class="alert alert-danger">
+        {{ message }}
+      </div>
+    {% endfor %}
 
-    {% endblock %}
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+    {% endfor %}
+    <div class="container" style="padding-top:10px;">
+      {% block body %}
+
+      {% endblock %}
+    </div>
   </body>
 </html>
