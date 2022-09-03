@@ -4,7 +4,7 @@
     Lista de Usuários
   </div>
   <div class="card-body">
-    <table class="table">
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th scope="col">
@@ -16,7 +16,7 @@
           <th scope="col">
             {{ knp_pagination_sortable(services, 'Email', 'email') }}
           </th>
-          <th scope="col">
+          <th width="15%" scope="col">
             Ação
           </th>
         </tr>
@@ -35,7 +35,7 @@
               {{ user.email }}
             </td>
             <td>
-              <a class="btn btn-sucess" href="/user/update">Editar</a>
+              <a class="btn btn-success" href="/user/update">Editar</a>
               <a class="btn btn-danger" href="/user/delte">Delete</a>
             </td>
           </tr>

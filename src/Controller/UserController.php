@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Services\UserLista;
+use App\Repository\Operacoes\Operacao;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
 
-    #[Route(path: '/user')]
+    #[Route(path: '/user', name: 'user_index')]
     public function index(
         Request $request,
         UserLista $userLista,
@@ -24,16 +26,23 @@ class UserController extends AbstractController
     }
 
     #[Route(path: '/user/create', methods: ["POST", "GET"])]
-    public function create(Request $request)
-    {
+    public function create(
+        Request $request,
+        ManagerRegistry $doctrine
+    ) {
         $user  = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            echo 'olaaa';
-            exit();
+            $user = $form->getData();
+            $user->setSenha('11223');
+            $operacao = new Operacao($doctrine);
+            $operacao->save($user);
+
+            $this->addFlash('success', 'Dados inseridos com sucesso!');
+            return $this->redirectToRoute('user_index');
         }
-        return $this->renderForm('user/create.html.twig', [
+        return $this->renderForm('user/form.html.twig', [
             'form' => $form
         ]);
     }
@@ -45,8 +54,8 @@ class UserController extends AbstractController
         exit();
     }
 
-    #[Route(path: '/user/delete')]
-    public function delete()
+    #[Route(path: '/user/delete/{id}')]
+    public function delete(int $id)
     {
     }
 }

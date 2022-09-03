@@ -6,10 +6,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use App\Validacao\Import\ValidaUser;
 
 
 #[ORM\Entity(repositoryClass: "App\Repository\UserRepository")]
-#[ORM\Table(name: 'user')]
+#[ORM\Table(name: 'users')]
 #[UniqueConstraint(name: "unique_user_email", columns: ["email"])]
 class User
 {
@@ -20,6 +23,7 @@ class User
 
     #[ORM\Column(type: "string")]
     #[Assert\NotBlank]
+    #[Assert\Callback([ValidaUser::class, 'validate'], payload: ['info' => '{{ nome }}'])]
     private String $nome;
 
     #[ORM\Column(type: "string")]
