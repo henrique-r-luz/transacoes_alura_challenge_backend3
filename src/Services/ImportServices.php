@@ -32,8 +32,9 @@ class ImportServices
         foreach ($arquivo as $line) {
             $linhaObj = str_getcsv($line);
             foreach ($linhaObj as $colunas) {
+                //impede que valore em branco ou nulos sejam inserido
                 if ($colunas == '') {
-                  continue 2;
+                    continue 2;
                 }
             }
             $this->contaBanco[$linhaObj[0] . $linhaObj[1] . $linhaObj[2]] = [$linhaObj[0], $linhaObj[1], $linhaObj[2]];
