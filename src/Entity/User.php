@@ -29,6 +29,9 @@ class User
     #[ORM\Column(type: "string")]
     #[Assert\NotBlank]
     #[Assert\Callback([ValidaUser::class, 'uniqueEmail'])]
+    #[Assert\Email(
+        message: 'O email {{ value }} não é valido.',
+    )]
     private String $email;
 
     #[ORM\Column(type: "text")]

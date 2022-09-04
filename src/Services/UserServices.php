@@ -55,10 +55,6 @@ class UserServices
     }
 
 
-    public function delete(ManagerRegistry $doctrine)
-    {
-        $doctrine->getRepository(User::class)->find($$this->user->getId())
-    }
 
     private function sendEmail()
     {
