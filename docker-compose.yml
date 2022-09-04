@@ -30,7 +30,7 @@ services:
       - ./docker-compose/postgres/db-data:/var/lib/postgresql/data
     networks:
       - rede
-      
+
   apache:
     build:
       context: ./docker-compose/apache
@@ -47,6 +47,28 @@ services:
       - ./docker-compose/apache/demo.apache.conf:/etc/apache2/sites-available/demo.apache.conf
       - ./docker-compose/apache/apache.conf:/etc/apache2/apache.conf
 
+  mailhog:
+    image: mailhog/mailhog
+    #restart: always
+    logging:
+      driver: "none"
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - rede
+
+  mail:
+    image: bytemark/smtp
+    environment:
+      RELAY_HOST: smtp.example.com
+      RELAY_PORT: 25
+      RELAY_USERNAME: user
+      RELAY_PASSWORD: senha
+    networks:
+      - rede
+    ports:
+      - "25:25"
 
 networks:
   rede:

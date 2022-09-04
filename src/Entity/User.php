@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use App\Validacao\Import\ValidaUser;
-
+use Symfony\Component\Mime\Message;
 
 #[ORM\Entity(repositoryClass: "App\Repository\UserRepository")]
 #[ORM\Table(name: 'users')]
@@ -28,6 +28,7 @@ class User
 
     #[ORM\Column(type: "string")]
     #[Assert\NotBlank]
+    #[Assert\Callback([ValidaUser::class, 'uniqueEmail'])]
     private String $email;
 
     #[ORM\Column(type: "text")]

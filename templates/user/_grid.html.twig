@@ -35,8 +35,12 @@
               {{ user.email }}
             </td>
             <td>
-              <a class="btn btn-success" href="/user/update">Editar</a>
-              <a class="btn btn-danger" href="/user/delte">Delete</a>
+              <a class="btn btn-success" href="/user/update/{{ user.id }}">
+                Editar
+              </a>
+              <a class="btn btn-danger" href="/user/delete/{{ user.id }}">
+                Delete
+              </a>
             </td>
           </tr>
         {% endfor %}

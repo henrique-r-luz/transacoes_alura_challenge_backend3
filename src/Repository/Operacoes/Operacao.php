@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repository\Operacoes;
+
 use Doctrine\Persistence\ManagerRegistry;
 
 class Operacao
@@ -24,7 +25,10 @@ class Operacao
     }
 
 
-    public function delete()
+    public function delete($entidade)
     {
+        $entityManager = $this->doctrine->getManager();
+        $entityManager->remove($entidade);
+        $entityManager->flush();
     }
 }
