@@ -24,7 +24,7 @@ class UserLista
         return $this->paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            10
+            5
         );
     }
 

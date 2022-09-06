@@ -21,16 +21,16 @@
       </thead>
       <tbody>
         {# table body #}
-        {% for transacao in services %}
+        {% for importe in services %}
           <tr>
             <td>
-              {{ transacao.id }}
+              {{ importe.id }}
             </td>
             <td>
-              {{ transacao.dataGrid }}
+              {{ importe.dataPrimeiraTransacao }}
             </td>
             <td>
-              {{ transacao.import.data }}
+              {{ importe.data }}
             </td>
           </tr>
         {% endfor %}
