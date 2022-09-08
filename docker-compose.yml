@@ -58,18 +58,6 @@ services:
     networks:
       - rede
 
-  mail:
-    image: bytemark/smtp
-    environment:
-      RELAY_HOST: smtp.example.com
-      RELAY_PORT: 25
-      RELAY_USERNAME: user
-      RELAY_PASSWORD: senha
-    networks:
-      - rede
-    ports:
-      - "25:25"
-
 networks:
   rede:
     driver: bridge

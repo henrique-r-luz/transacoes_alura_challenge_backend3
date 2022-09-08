@@ -2,27 +2,32 @@
 
 namespace App\Validacao\Import;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use App\Entity\User;
+
 
 class ValidaUser
 {
 
-    public static function validate($object, ExecutionContextInterface $context, $payload)
-    {
-    }
-
-
     public static function uniqueEmail($object, ExecutionContextInterface $context, $payload)
     {
+
+        $user = $object;
         $kernel = $GLOBALS['app'];
         $container = $kernel->getContainer();
         $doctrine = $container->get('doctrine');
-        $user = $doctrine->getRepository(User::class)->findBy(['email' => $object]);
-        if (!empty($user)) {
+        $conn = $doctrine->getConnection();
+        $sql = $conn->createQueryBuilder();
+        $sql->from('users', 'usuario')
+            ->select('id')
+            ->andWhere('email = :email')
+            ->setParameter('email', $user->getEmail());
+        if ($user->getId() != null) {
+            $sql->andWhere($sql->expr()->neq('usuario.id', ':id'))
+                ->setParameter('id', $user->getId());
+        }
+        $query = $sql->execute()
+            ->fetchAllAssociative();
+        if (!empty($query)) {
             $context->buildViolation('O email já foi cadastrado! ')
                 ->atPath('email')
                 ->addViolation();

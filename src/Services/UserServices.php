@@ -2,16 +2,18 @@
 
 namespace App\Services;
 
+use Exception;
+use Throwable;
 use App\Entity\User;
 use App\Helper\ArulaException;
+use App\Helper\Rules;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\Mailer;
 use App\Repository\Operacoes\Operacao;
 use Symfony\Component\Mailer\Transport;
 use Doctrine\Persistence\ManagerRegistry;
-use Exception;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Throwable;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserServices
 {
@@ -19,39 +21,59 @@ class UserServices
     private User $user;
     private $form;
     private $senha;
+    private $passwordHasher;
+    private $doctrine;
 
-    public function salvar(ManagerRegistry $doctrine)
+
+    function __construct(
+        UserPasswordHasherInterface $passwordHasher,
+        ManagerRegistry $doctrine
+    ) {
+        $this->doctrine = $doctrine;
+        $this->passwordHasher = $passwordHasher;
+    }
+
+    public function salvar()
     {
         try {
-            $doctrine->getConnection()->beginTransaction();
+            $this->doctrine->getConnection()->beginTransaction();
             $this->user = $this->form->getData();
             $this->senha = $this->geraNumero();
             $this->sendEmail();
-            $this->user->setSenha(Bcrypt::hash($this->senha));
-            $operacao = new Operacao($doctrine);
-            $operacao->save($this->user);
-            $doctrine->getConnection()->commit();
+            $hashedPassword = $this->passwordHasher->hashPassword(
+                $this->user,
+                $this->senha,
+            );
+            $this->user->setSenha($hashedPassword);
+            $this->cadastra();
+            $this->doctrine->getConnection()->commit();
         } catch (TransportExceptionInterface $e) {
-            $doctrine->getConnection()->rollBack();
+            $this->doctrine->getConnection()->rollBack();
             throw new ArulaException($e->getMessage());
         } catch (Throwable $e) {
-            $doctrine->getConnection()->rollBack();
+            $this->doctrine->getConnection()->rollBack();
             throw new Exception($e->getMessage());
         }
     }
 
-    public function update(ManagerRegistry $doctrine)
+    public function update()
     {
         try {
-            $doctrine->getConnection()->beginTransaction();
+            $this->doctrine->getConnection()->beginTransaction();
             $this->user = $this->form->getData();
-            $operacao = new Operacao($doctrine);
-            $operacao->save($this->user);
-            $doctrine->getConnection()->commit();
+            $this->cadastra();
+            $this->doctrine->getConnection()->commit();
         } catch (Throwable $e) {
-            $doctrine->getConnection()->rollBack();
+            $this->doctrine->getConnection()->rollBack();
             throw new Exception($e->getMessage());
         }
+    }
+
+    private function cadastra()
+    {
+        $this->user->setRoles(["ROLE_ADM"]);
+        $operacao = new Operacao($this->doctrine);
+        $operacao->save($this->user);
     }
 
 

@@ -2,7 +2,7 @@
   form_start(
     form,
     {
-      action: '/'
+      action: path('import') 
     }
   )
 }}
@@ -19,7 +19,7 @@
   </div>
   <div class="card-footer">
     {{ form_widget(form.upload) }}
-    <a class="btn btn-secondary" href="/">Limpar</a>
+    <a class="btn btn-secondary" href={{ path('import') }}>Limpar</a>
   </div>
 </div>
 {{ form_end(form) }}

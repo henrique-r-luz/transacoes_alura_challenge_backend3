@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Throwable;
 use App\Services\ImportLista;
 use App\Helper\ArulaException;
 use App\Services\ImportServices;
@@ -9,19 +10,24 @@ use App\Entity\ArquivoTransacoes;
 use App\Form\ArquivoTransacoesType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Throwable;
+
 
 class ImportController extends AbstractController
 {
+    #[Route(path: '/', name: 'home')]
+    public function home()
+    {
+        return $this->redirectToRoute('import');
+    }
 
-    #[Route(path: '/', methods: ["POST", "GET"])]
+    #[Route(path: '/app/import', name: 'import', methods: ["POST", "GET"])]
     public function upload(
         Request $request,
         ImportServices $importServices,
         ImportLista $importLista,
     ) {
-
         try {
             $arquivoTransacoes = new ArquivoTransacoes();
             $form = $this->createForm(ArquivoTransacoesType::class, $arquivoTransacoes);

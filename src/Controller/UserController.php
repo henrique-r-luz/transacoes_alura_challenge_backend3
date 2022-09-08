@@ -14,11 +14,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
 
-    #[Route(path: '/user', name: 'user_index')]
+    #[Route(path: 'app/user', name: 'user_index')]
+
     public function index(
         Request $request,
         UserLista $userLista,
@@ -29,10 +31,9 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/user/create', methods: ["POST", "GET"])]
+    #[Route(path: 'app/user/create', name: 'user_create', methods: ["POST", "GET"])]
     public function create(
         Request $request,
-        ManagerRegistry $doctrine,
         UserServices $userServices,
     ) {
         try {
@@ -44,7 +45,7 @@ class UserController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $userServices->setUser($user);
                 $userServices->setForm($form);
-                $userServices->salvar($doctrine);
+                $userServices->salvar();
                 $this->addFlash('success', 'Dados inseridos com sucesso!');
                 return $this->redirectToRoute('user_index');
             }
@@ -67,7 +68,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/user/update/{id}')]
+    #[Route(path: 'app/user/update/{id}', name: 'user_update')]
     public function update(
         int $id,
         ManagerRegistry $doctrine,
@@ -83,12 +84,12 @@ class UserController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $userServices->setUser($user);
                 $userServices->setForm($form);
-                $userServices->salvar($doctrine);
+                $userServices->update();
                 $this->addFlash('success', 'Dados Atualizados com sucesso!');
                 return $this->redirectToRoute('user_index');
             }
         } catch (Throwable $e) {
-            $this->addFlash('danger', 'Um erro inesperado Ocorreu. ');
+            $this->addFlash('danger', 'Um erro inesperado Ocorreu. ' . $e->getMessage());
             return $this->renderForm($pagina, [
                 'form' => $form,
                 'titulo' => $titulo
@@ -107,7 +108,7 @@ class UserController extends AbstractController
     }
 
 
-    #[Route(path: '/user/delete/{id}')]
+    #[Route(path: 'app/user/delete/{id}', name: 'user_delete')]
     public function delete(
         int $id,
         ManagerRegistry $doctrine

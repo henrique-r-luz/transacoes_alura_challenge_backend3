@@ -16,25 +16,27 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: "App\Repository\UserRepository")]
 #[ORM\Table(name: 'users')]
 #[UniqueConstraint(name: "unique_user_email", columns: ["email"])]
+#[Assert\Callback([ValidaUser::class, 'uniqueEmail'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
-    private int $id;
+    private $id = null;
 
     #[ORM\Column(type: "string")]
     #[Assert\NotBlank]
-    #[Assert\Callback([ValidaUser::class, 'validate'], payload: ['info' => '{{ nome }}'])]
     private String $nome;
 
     #[ORM\Column(type: "string")]
     #[Assert\NotBlank]
-    #[Assert\Callback([ValidaUser::class, 'uniqueEmail'])]
     #[Assert\Email(
         message: 'O email {{ value }} não é valido.',
     )]
     private String $email;
+
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
 
     #[ORM\Column(type: "text")]
     private string $senha;
@@ -119,8 +121,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     /**
@@ -136,8 +146,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Returns the identifier for this user (e.g. its username or email address).
      */
-    public function getUserIdentifier()
+    public function getUserIdentifier(): string
     {
+        return (string) $this->email;
     }
 
     /**
@@ -145,7 +156,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * Usually on authentication, a plain-text password will be compared to this value.
      */
-    public function getPassword()
+    public function getPassword(): string
     {
+        return $this->senha;
+    }
+
+    public function getusername()
+    {
+        return $this->email;
     }
 }

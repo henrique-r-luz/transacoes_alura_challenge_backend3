@@ -1,4 +1,4 @@
-<a class="btn btn-primary" href="/user/create">Novo</a>
+<a class="btn btn-primary" href={{ path('user_create') }}>Novo</a>
 <div class="card" style="margin-top:10px;">
   <div class="card-header">
     Lista de Usuários
@@ -35,10 +35,10 @@
               {{ user.email }}
             </td>
             <td>
-              <a class="btn btn-success" href="/user/update/{{ user.id }}">
+              <a class="btn btn-success" href={{ path('user_update', { 'id': user.id }) }}>
                 Editar
               </a>
-              <a class="btn btn-danger" href="/user/delete/{{ user.id }}">
+              <a class="btn btn-danger" href={{ path('user_delete', { 'id': user.id }) }}>
                 Delete
               </a>
             </td>

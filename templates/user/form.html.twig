@@ -23,7 +23,7 @@
     </div>
     <div class="card-footer">
       {{ form_widget(form.salvar) }}
-      <a class="btn btn-secondary" href="/user/create">Limpar</a>
+      <a class="btn btn-secondary" href={{ path('user_create')}}>Limpar</a>
     </div>
   </div>
   {{ form_end(form) }}
