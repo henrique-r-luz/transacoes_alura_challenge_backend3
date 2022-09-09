@@ -2,6 +2,7 @@
 
 namespace App\Validacao\Import;
 
+use App\Entity\User;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
@@ -29,6 +30,16 @@ class ValidaUser
             ->fetchAllAssociative();
         if (!empty($query)) {
             $context->buildViolation('O email já foi cadastrado! ')
+                ->atPath('email')
+                ->addViolation();
+        }
+    }
+
+
+    public function validaEmailAdmin($object, ExecutionContextInterface $context, $payload)
+    {
+        if ($object === User::emailAdmin) {
+            $context->buildViolation('Esse email está reservado para o administrador !')
                 ->atPath('email')
                 ->addViolation();
         }

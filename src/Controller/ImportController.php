@@ -3,22 +3,29 @@
 namespace App\Controller;
 
 use Throwable;
+use App\Entity\User;
 use App\Services\ImportLista;
 use App\Helper\ArulaException;
 use App\Services\ImportServices;
 use App\Entity\ArquivoTransacoes;
 use App\Form\ArquivoTransacoesType;
+use App\Repository\Operacoes\Operacao;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class ImportController extends AbstractController
 {
     #[Route(path: '/', name: 'home')]
-    public function home()
-    {
+    public function home(
+        UserPasswordHasherInterface $passwordHasher,
+        ManagerRegistry $doctrine
+    ) {
+
         return $this->redirectToRoute('import');
     }
 

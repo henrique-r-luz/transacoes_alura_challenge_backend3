@@ -19,6 +19,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[Assert\Callback([ValidaUser::class, 'uniqueEmail'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    const emailAdmin = "admin@email.com.br";
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
@@ -33,6 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email(
         message: 'O email {{ value }} não é valido.',
     )]
+    #[Assert\Callback([ValidaUser::class, 'validaEmailAdmin'])]
     private String $email;
 
     #[ORM\Column(type: 'json')]

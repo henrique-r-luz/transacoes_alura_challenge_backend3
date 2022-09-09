@@ -114,9 +114,11 @@ class UserController extends AbstractController
         ManagerRegistry $doctrine
     ) {
         $user = $doctrine->getRepository(User::class)->find($id);
+        if ($user->getEmail() === User::emailAdmin) {
+            $this->addFlash('danger', 'Esse email não pode ser excluido!');
+        }
         $operacao = new Operacao($doctrine);
         $operacao->delete($user);
-        $this->addFlash('success', 'Dados Removido com sucesso!');
         return $this->redirectToRoute('user_index');
     }
 }

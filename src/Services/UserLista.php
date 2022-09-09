@@ -31,9 +31,9 @@ class UserLista
 
     public function dataProvider($request)
     {
-        $query = $this->doctrine->getRepository(User::class)->findBy([], ['nome' => 'ASC']);
+        $users = $this->doctrine->getRepository(User::class)->getUsers();
         return $this->paginate(
-            $query,
+            $users,
             $request
         );
     }

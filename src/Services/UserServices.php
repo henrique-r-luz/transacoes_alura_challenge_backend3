@@ -5,8 +5,9 @@ namespace App\Services;
 use Exception;
 use Throwable;
 use App\Entity\User;
-use App\Helper\ArulaException;
+use App\Entity\Roles;
 use App\Helper\Rules;
+use App\Helper\ArulaException;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\Mailer;
 use App\Repository\Operacoes\Operacao;
@@ -71,7 +72,7 @@ class UserServices
 
     private function cadastra()
     {
-        $this->user->setRoles(["ROLE_ADM"]);
+        $this->user->setRoles([Roles::ROLE_ADM]);
         $operacao = new Operacao($this->doctrine);
         $operacao->save($this->user);
     }

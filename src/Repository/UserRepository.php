@@ -13,4 +13,15 @@ class UserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
+
+    public function getUsers()
+    {
+        $sql = $this->createQueryBuilder('u')
+            ->orderBy('u.nome', 'ASC')
+            ->andWhere('u.email <> :email')
+            ->setParameter('email', User::emailAdmin);
+        $query = $sql->getQuery();
+
+        return $query->execute();
+    }
 }
