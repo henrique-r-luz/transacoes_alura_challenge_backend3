@@ -1,0 +1,117 @@
+<table class="table table-bordered">
+  <thead>
+    <tr align="center">
+      <th rowspan="2">
+        id
+      </th>
+      <th colspan="3">
+        Origem
+      </th>
+      <th colspan="3">
+        Destino
+      </th>
+      <th rowspan="2">
+        Valor
+      </th>
+    </tr>
+    <tr>
+      <th>
+        {{
+          knp_pagination_sortable(
+            transacao,
+            'Banco',
+            'contaBancariaOrigem.nome'
+          )
+        }}
+      </th>
+      <th>
+        {{
+          knp_pagination_sortable(
+            transacao,
+            'Agencia',
+            'contaBancariaOrigem.agencia'
+          )
+        }}
+      </th>
+      <th>
+        {{
+          knp_pagination_sortable(
+            transacao,
+            'conta',
+            'contaBancariaOrigem.conta'
+          )
+        }}
+      </th>
+      <th>
+        {{
+          knp_pagination_sortable(
+            transacao,
+            'Banco',
+            'contaBancariaDestino.nome'
+          )
+        }}
+      </th>
+      <th>
+        {{
+          knp_pagination_sortable(
+            transacao,
+            'Agencia',
+            'contaBancariaDestino.agencia'
+          )
+        }}
+      </th>
+      <th>
+        {{
+          knp_pagination_sortable(
+            transacao,
+            'conta',
+            'contaBancariaDestino.conta'
+          )
+        }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {# table body #}
+    {% for tran in transacao %}
+      <tr>
+        <td>
+          {{ tran.id }}
+        </td>
+        <td>
+          {{ tran.contaBancariaOrigem.nome_banco }}
+        </td>
+        <td>
+          {{ tran.contaBancariaOrigem.agencia }}
+        </td>
+        <td>
+          {{ tran.contaBancariaOrigem.conta }}
+        </td>
+        <td>
+          {{ tran.contaBancariaDestino.nome_banco }}
+        </td>
+        <td>
+          {{ tran.contaBancariaDestino.agencia }}
+        </td>
+        <td>
+          {{ tran.contaBancariaDestino.conta }}
+        </td>
+        <td>
+          {{ tran.valor }}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="row">
+  <div class="col">
+    <div class="pagination mt-3 d-flex justify-content-center">
+      {{
+        knp_pagination_render(
+          transacao,
+          '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig'
+        )
+      }}
+    </div>
+  </div>
+</div>

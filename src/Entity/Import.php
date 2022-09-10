@@ -21,6 +21,9 @@ class Import
     #[ORM\OneToMany(targetEntity: "Transacao",  mappedBy: "import")]
     private $transacoes;
 
+    #[ORM\ManyToOne(targetEntity: "User", inversedBy: 'import')]
+    private  $usuario;
+
 
     public function __construct()
     {
@@ -77,6 +80,29 @@ class Import
 
     public function getDataPrimeiraTransacao()
     {
-        return $this->transacoes[0]->getDataGrid();
+        if (isset($this->transacoes[0])) {
+            return $this->transacoes[0]->getDataGrid() ?? '';
+        }
+        return '';
+    }
+
+    /**
+     * Get the value of usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Set the value of usuario
+     *
+     * @return  self
+     */
+    public function setUsuario($usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
     }
 }

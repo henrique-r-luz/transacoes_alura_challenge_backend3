@@ -4,14 +4,15 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Mime\Message;
+use App\Validacao\Import\ValidaUser;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use App\Validacao\Import\ValidaUser;
-use Symfony\Component\Mime\Message;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: "App\Repository\UserRepository")]
 #[ORM\Table(name: 'users')]
@@ -43,6 +44,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: "text")]
     private string $senha;
+
+    #[ORM\OneToMany(targetEntity: "Import", mappedBy: "usuario")]
+    private $import;
+
+
+    public function __construct()
+    {
+        $this->import =  new ArrayCollection();
+    }
+
+    public function addImport(Import $import)
+    {
+        $this->import->add($import);
+        $import->setUsuario($this);
+    }
+
+
+    public function getImport()
+    {
+        return $this->import;
+    }
 
     /**
      * Get the value of nome

@@ -8,55 +8,59 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
 
 #[ORM\Entity(repositoryClass: TransacaoRepository::class)]
 #[ORM\Table(name: "transacao")]
-#[UniqueConstraint(name: "unique_conta_origem_conta_destino_data", columns: ["conta_bancaria_origem_id","conta_bancaria_destino_id","data"])]
+#[UniqueConstraint(name: "unique_conta_origem_conta_destino_data", columns: ["conta_bancaria_origem_id", "conta_bancaria_destino_id", "data"])]
 
 class Transacao
 {
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type : "integer")]
+    #[ORM\Column(type: "integer")]
     private int $id;
-    
-    #[ORM\ManyToOne(targetEntity:"ContaBancaria")]
-    #[ORM\JoinColumn(name:'conta_bancaria_origem_id')]
+
+    #[ORM\ManyToOne(targetEntity: "ContaBancaria", inversedBy: "transacoesOrigem")]
+    #[ORM\JoinColumn(name: 'conta_bancaria_origem_id')]
     private  $contaBancariaOrigem;
 
-    #[ORM\ManyToOne(targetEntity:"ContaBancaria")]
-    #[ORM\JoinColumn(name:'conta_bancaria_destino_id')]
+    #[ORM\ManyToOne(targetEntity: "ContaBancaria", inversedBy: "transacoesDestino")]
+    #[ORM\JoinColumn(name: 'conta_bancaria_destino_id')]
     private  $contaBancariaDestino;
 
-    #[ORM\ManyToOne(targetEntity:"Import")]
-    #[ORM\JoinColumn(name:'import_id')]
+    #[ORM\ManyToOne(targetEntity: "Import", inversedBy: "transacoes")]
+    #[ORM\JoinColumn(name: 'import_id')]
     private  $import;
-    
-    #[ORM\Column(type:"decimal",precision:8, scale:2)]
+
+    #[ORM\Column(type: "decimal", precision: 8, scale: 2)]
     private $valor;
-    #[ORM\Column(type:"datetime")]
+    #[ORM\Column(type: "datetime")]
     private $data;
-   
 
 
-    public function setContaBancariaOrigem(ContaBancaria $contaBancariaOrigem){
+
+    public function setContaBancariaOrigem(ContaBancaria $contaBancariaOrigem)
+    {
         $this->contaBancariaOrigem = $contaBancariaOrigem;
     }
 
-    public function setContaBancariaDestino(ContaBancaria $contaBancariaDestino){
+    public function setContaBancariaDestino(ContaBancaria $contaBancariaDestino)
+    {
         $this->contaBancariaDestino = $contaBancariaDestino;
     }
 
 
-    public function setImport(Import $import){
+    public function setImport(Import $import)
+    {
         $this->import = $import;
     }
 
-    public function getImport(){
+    public function getImport()
+    {
         return $this->import;
     }
 
     /**
      * Get the value of data
-     */ 
+     */
     public function getData()
     {
         return $this->data->format('d/m/Y H:i:s');
@@ -67,7 +71,8 @@ class Transacao
         return $this->data->format('d/m/Y');
     }
 
-    public function getDataSql(){
+    public function getDataSql()
+    {
         return $this->data->format('Y-m-d');
     }
 
@@ -76,7 +81,7 @@ class Transacao
      * Set the value of data
      *
      * @return  self
-     */ 
+     */
     public function setData($data)
     {
         $this->data = $data;
@@ -86,7 +91,7 @@ class Transacao
 
     /**
      * Get the value of valor
-     */ 
+     */
     public function getValor()
     {
         return $this->valor;
@@ -96,7 +101,7 @@ class Transacao
      * Set the value of valor
      *
      * @return  self
-     */ 
+     */
     public function setValor($valor)
     {
         $this->valor = $valor;
@@ -106,7 +111,7 @@ class Transacao
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -116,11 +121,27 @@ class Transacao
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
 
         return $this;
+    }
+
+    /**
+     * Get the value of contaBancariaOrigem
+     */
+    public function getContaBancariaOrigem()
+    {
+        return $this->contaBancariaOrigem;
+    }
+
+    /**
+     * Get the value of contaBancariaDestino
+     */
+    public function getContaBancariaDestino()
+    {
+        return $this->contaBancariaDestino;
     }
 }

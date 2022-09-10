@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  <div class="card" style="margin-top:10px;">
+    <div class="card-header">
+      Informações da Importação
+    </div>
+    <div class="card-body">
+      {% include 'import/_info_transacao.html.twig' %}
+    </div>
+  </div>
+  <div class="card" style="margin-top:10px;">
+    <div class="card-header">
+      Transações Importadas
+    </div>
+    <div class="card-body">
+      {% include 'import/_grid-detalhe.html.twig' %}
+    </div>
+  </div>
+{% endblock %}

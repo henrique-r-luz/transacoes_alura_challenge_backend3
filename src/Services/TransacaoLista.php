@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Entity\Import;
-use App\Repository\ImportRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Entity\Transacao;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
-class ImportLista
+class TransacaoLista
 {
     private $paginator;
     private $doctrine;
@@ -25,18 +25,17 @@ class ImportLista
         return $this->paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            10
+            count($query)
         );
     }
 
 
     public function dataProvider($request)
     {
-        /**@var ImportRepository */
-        $importDados = $this->doctrine->getRepository(Import::class);
-        $query = $importDados->allImport();
+        /**@var UserRepository */
+        $transacao = $this->doctrine->getRepository(Transacao::class)->findAll();
         return $this->paginate(
-            $query,
+            $transacao,
             $request
         );
     }

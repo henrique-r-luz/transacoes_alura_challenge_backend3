@@ -11,6 +11,7 @@ use App\Services\UserServices;
 use App\Repository\Operacoes\Operacao;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -88,7 +89,7 @@ class UserController extends AbstractController
                 return $this->redirectToRoute('user_index');
             }
         } catch (Throwable $e) {
-            $this->addFlash('danger', 'Um erro inesperado Ocorreu. ' . $e->getMessage());
+            $this->addFlash('danger', 'Um erro inesperado Ocorreu. ');
             return $this->renderForm($pagina, [
                 'form' => $form,
                 'titulo' => $titulo
@@ -110,11 +111,19 @@ class UserController extends AbstractController
     #[Route(path: 'app/user/delete/{id}', name: 'user_delete')]
     public function delete(
         int $id,
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        Security $security
     ) {
+        /**@var User **/
+        $userAuth = $security->getUser();
         $user = $doctrine->getRepository(User::class)->find($id);
         if ($user->getEmail() === User::emailAdmin) {
             $this->addFlash('danger', 'Esse email não pode ser excluido!');
+            return $this->redirectToRoute('user_index');
+        }
+        if ($userAuth->getId() === $user->getId()) {
+            $this->addFlash('danger', 'O usuario não pode excluir sua conta!');
+            return $this->redirectToRoute('user_index');
         }
         $operacao = new Operacao($doctrine);
         $operacao->delete($user);

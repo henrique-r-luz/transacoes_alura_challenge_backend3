@@ -17,6 +17,9 @@
               knp_pagination_sortable(services, 'Data Importação', 'dataImport')
             }}
           </th>
+          <th scope="col">
+            Açõa
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -32,6 +35,9 @@
             <td>
               {{ importe.data }}
             </td>
+            <td><a class="btn btn-info" href={{ path('import_detalhes', { 'id': importe.id }) }}>
+              Detalhar
+            </a></td>
           </tr>
         {% endfor %}
       </tbody>

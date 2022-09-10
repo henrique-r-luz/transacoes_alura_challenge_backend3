@@ -3,8 +3,9 @@
 namespace App\Services;
 
 use App\Entity\User;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 class UserLista
 {
@@ -24,16 +25,17 @@ class UserLista
         return $this->paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            5
+            10
         );
     }
 
 
     public function dataProvider($request)
     {
-        $users = $this->doctrine->getRepository(User::class)->getUsers();
+        /**@var UserRepository */
+        $users = $this->doctrine->getRepository(User::class);
         return $this->paginate(
-            $users,
+            $users->getUsers(),
             $request
         );
     }

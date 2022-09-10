@@ -36,7 +36,7 @@ class ValidaUser
     }
 
 
-    public function validaEmailAdmin($object, ExecutionContextInterface $context, $payload)
+    public static function validaEmailAdmin($object, ExecutionContextInterface $context, $payload)
     {
         if ($object === User::emailAdmin) {
             $context->buildViolation('Esse email está reservado para o administrador !')

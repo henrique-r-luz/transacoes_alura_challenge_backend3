@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Services\ImportLista;
 use App\Helper\ArulaException;
 use App\Services\ImportServices;
+use App\Services\TransacaoLista;
 use App\Entity\ArquivoTransacoes;
 use App\Form\ArquivoTransacoesType;
 use App\Repository\Operacoes\Operacao;
@@ -21,10 +22,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class ImportController extends AbstractController
 {
     #[Route(path: '/', name: 'home')]
-    public function home(
-        UserPasswordHasherInterface $passwordHasher,
-        ManagerRegistry $doctrine
-    ) {
+    public function home()
+    {
 
         return $this->redirectToRoute('import');
     }
@@ -56,10 +55,32 @@ class ImportController extends AbstractController
             $this->addFlash('danger', $e->getMessage());
         } catch (Throwable $e) {
             $this->addFlash('danger', 'Ocorreu um errro não esperado');
+        } finally {
+            return $this->renderForm('import/import.html.twig', [
+                'form' => $form,
+                'services' => $importLista->dataProvider($request)
+            ]);
         }
-        return $this->renderForm('import/import.html.twig', [
-            'form' => $form,
-            'services' => $importLista->dataProvider($request)
+    }
+
+    #[Route(path: '/app/import/detalhes/{id}', name: 'import_detalhes')]
+    public function detalhesImport(
+        int $id,
+        Request $request,
+        TransacaoLista $transacaoLista
+    ) {
+        $transacoes = $transacaoLista->dataProvider($request);
+        foreach ($transacoes as $transacao) {
+            $dataTransacao = $transacao->getDataGrid();
+            $dataImportacao = $transacao->getImport()->getData();
+            $usuario = $transacao->getImport()->getUsuario()->getNome();
+            break;
+        }
+        return $this->renderForm('import/detalhar.html.twig', [
+            'transacao' => $transacoes,
+            'dataTransacao' => $dataTransacao,
+            'dataImportacao' => $dataImportacao,
+            'usuario' => $usuario
         ]);
     }
 }

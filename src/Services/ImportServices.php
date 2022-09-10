@@ -11,6 +11,7 @@ use App\Repository\Operacoes\Operacao;
 use App\Validacao\Import\ValidaImport;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Validacao\Import\ValidaDataTransacao;
+use Symfony\Component\Security\Core\Security;
 
 
 class ImportServices
@@ -18,9 +19,13 @@ class ImportServices
     private $contaBanco;
     private $doctrine;
     private  $dataInicio = '';
+    private $security;
 
-    public function __construct(ManagerRegistry $doctrine)
-    {
+    public function __construct(
+        ManagerRegistry $doctrine,
+        Security $security
+    ) {
+        $this->security = $security;
         $this->doctrine = $doctrine;
     }
 
@@ -62,6 +67,8 @@ class ImportServices
             foreach ($this->vetCsv as $id => $item) {
                 $this->insereContaBancariaTransacao($item, $importModel);
             }
+            $this->doctrine->getManager()->persist($importModel);
+            $this->doctrine->getManager()->flush();
             $this->doctrine->getConnection()->commit();
         } catch (ArulaException $e) {
             $this->doctrine->getConnection()->rollBack();
@@ -82,8 +89,8 @@ class ImportServices
             $contaBancaria->setAgencia($conta[1]);
             $contaBancaria->setConta($conta[2]);
             $contaBancaria->setNome_banco($conta[0]);
-            $operacao = new Operacao($this->doctrine);
-            $operacao->save($contaBancaria);
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($contaBancaria);
         }
     }
 
@@ -111,16 +118,20 @@ class ImportServices
         if (!$validaDataTransacao->valida()) {
             return;
         }
-        $operacao = new Operacao($this->doctrine);
-        $operacao->save($transacaoModel);
+        $entityManager = $this->doctrine->getManager();
+        $entityManager->persist($transacaoModel);
+        $importModel->addTransacao($transacaoModel);
     }
 
     private function insereImport()
     {
+        /**@var User **/
+        $userAuth = $this->security->getUser();
         $importModel = new Import();
         $importModel->setData(new \DateTime());
-        $operacao = new Operacao($this->doctrine);
-        $operacao->save($importModel);
+        $importModel->setUsuario($userAuth);
+        $entityManager = $this->doctrine->getManager();
+        $entityManager->persist($importModel);
         return $importModel;
     }
 }
