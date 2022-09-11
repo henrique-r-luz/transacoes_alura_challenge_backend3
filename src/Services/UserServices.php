@@ -13,6 +13,7 @@ use Symfony\Component\Mailer\Mailer;
 use App\Repository\Operacoes\Operacao;
 use Symfony\Component\Mailer\Transport;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -24,14 +25,17 @@ class UserServices
     private $senha;
     private $passwordHasher;
     private $doctrine;
+    private $security;
 
 
     function __construct(
         UserPasswordHasherInterface $passwordHasher,
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        Security $security,
     ) {
         $this->doctrine = $doctrine;
         $this->passwordHasher = $passwordHasher;
+        $this->security = $security;
     }
 
     public function salvar()
@@ -75,6 +79,24 @@ class UserServices
         $this->user->setRoles([Roles::ROLE_ADM]);
         $operacao = new Operacao($this->doctrine);
         $operacao->save($this->user);
+    }
+
+
+    public function delete($id)
+    {
+        /** @var User */
+        $userAuth = $this->security->getUser();
+        /** @var User */
+        $user = $this->doctrine->getRepository(User::class)->find($id);
+        if ($user->getEmail() === User::emailAdmin) {
+            throw new ArulaException('Esse email não pode ser excluido!');
+        }
+        if ($userAuth->getId() === $user->getId()) {
+            throw new ArulaException('O usuario não pode excluir sua conta!');
+        }
+        $user->setAtivo(false);
+        $operacao = new Operacao($this->doctrine);
+        $operacao->save($user);
     }
 
 

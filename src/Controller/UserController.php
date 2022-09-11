@@ -111,22 +111,17 @@ class UserController extends AbstractController
     #[Route(path: 'app/user/delete/{id}', name: 'user_delete')]
     public function delete(
         int $id,
-        ManagerRegistry $doctrine,
-        Security $security
+        UserServices $userServices,
     ) {
-        /**@var User **/
-        $userAuth = $security->getUser();
-        $user = $doctrine->getRepository(User::class)->find($id);
-        if ($user->getEmail() === User::emailAdmin) {
-            $this->addFlash('danger', 'Esse email não pode ser excluido!');
+        try {
+            $userServices->delete($id);
+            $this->addFlash('success', 'O usuário foi desabilitado. ');
+        } catch (ArulaException $e) {
+            $this->addFlash('danger', $e->getMessage());
+        } catch (Throwable $e) {
+            $this->addFlash('danger', 'Um erro inesperado ocorreu');
+        } finally {
             return $this->redirectToRoute('user_index');
         }
-        if ($userAuth->getId() === $user->getId()) {
-            $this->addFlash('danger', 'O usuario não pode excluir sua conta!');
-            return $this->redirectToRoute('user_index');
-        }
-        $operacao = new Operacao($doctrine);
-        $operacao->delete($user);
-        return $this->redirectToRoute('user_index');
     }
 }

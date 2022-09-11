@@ -4,22 +4,27 @@ namespace App\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Mime\Message;
 use App\Validacao\Import\ValidaUser;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
+use App\Entity\Traits\UserGetSet;
 
 #[ORM\Entity(repositoryClass: "App\Repository\UserRepository")]
 #[ORM\Table(name: 'users')]
 #[UniqueConstraint(name: "unique_user_email", columns: ["email"])]
+
+
 #[Assert\Callback([ValidaUser::class, 'uniqueEmail'])]
+#[Assert\Callback([ValidaUser::class, 'validaUserAtivo'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
+    use UserGetSet;
     const emailAdmin = "admin@email.com.br";
 
     #[ORM\Id]
@@ -48,6 +53,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: "Import", mappedBy: "usuario")]
     private $import;
 
+    #[ORM\Column(type: "boolean", nullable: false, options: ["default" => 1])]
+    private bool $ativo = true;
+
 
     public function __construct()
     {
@@ -58,92 +66,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->import->add($import);
         $import->setUsuario($this);
-    }
-
-
-    public function getImport()
-    {
-        return $this->import;
-    }
-
-    /**
-     * Get the value of nome
-     */
-    public function getNome()
-    {
-        return $this->nome;
-    }
-
-    /**
-     * Set the value of nome
-     *
-     * @return  self
-     */
-    public function setNome($nome)
-    {
-        $this->nome = $nome;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of email
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set the value of email
-     *
-     * @return  self
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of senha
-     */
-    public function getSenha()
-    {
-        return $this->senha;
-    }
-
-    /**
-     * Set the value of senha
-     *
-     * @return  self
-     */
-    public function setSenha($senha)
-    {
-        $this->senha = $senha;
-
-        return $this;
     }
 
     public function getRoles(): array

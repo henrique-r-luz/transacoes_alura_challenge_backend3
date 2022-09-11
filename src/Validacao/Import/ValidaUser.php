@@ -44,4 +44,16 @@ class ValidaUser
                 ->addViolation();
         }
     }
+
+
+    public static function validaUserAtivo($object, ExecutionContextInterface $context, $payload)
+    {
+        $user = $object;
+        //update
+        if ($user->getId() != null && $user->getAtivo() === false) {
+            $context->buildViolation('Usuário desativado não pode ser alterado ! ')
+                ->atPath('email')
+                ->addViolation();
+        }
+    }
 }

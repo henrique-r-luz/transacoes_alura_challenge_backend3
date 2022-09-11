@@ -19,6 +19,7 @@ class UserRepository extends ServiceEntityRepository
         $sql = $this->createQueryBuilder('u')
             ->orderBy('u.nome', 'ASC')
             ->andWhere('u.email <> :email')
+            ->andWhere('u.ativo = true')
             ->setParameter('email', User::emailAdmin);
         $query = $sql->getQuery();
 

@@ -23,6 +23,9 @@ security:
 
             logout:
                 path: app_logout
+            
+            pattern: ^/
+            user_checker: App\Helper\ChecaUsuario
 
 
             # activate different ways to authenticate
