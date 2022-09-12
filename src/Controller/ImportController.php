@@ -3,20 +3,16 @@
 namespace App\Controller;
 
 use Throwable;
-use App\Entity\User;
 use App\Services\ImportLista;
 use App\Helper\ArulaException;
 use App\Services\ImportServices;
 use App\Services\TransacaoLista;
 use App\Entity\ArquivoTransacoes;
 use App\Form\ArquivoTransacoesType;
-use App\Repository\Operacoes\Operacao;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 
 class ImportController extends AbstractController
@@ -40,7 +36,7 @@ class ImportController extends AbstractController
             $form->handleRequest($request);
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
-                    $importServices->importa($form->get('arquivo')->getData());
+                    $importServices->importa($form->get('arquivo'));
                     $importServices->salva();
                     $this->addFlash('success', 'Dados inseridos com sucesso!');
                 } else {
@@ -69,7 +65,7 @@ class ImportController extends AbstractController
         Request $request,
         TransacaoLista $transacaoLista
     ) {
-        $transacoes = $transacaoLista->dataProvider($request);
+        $transacoes = $transacaoLista->dataProvider($request, $id);
         foreach ($transacoes as $transacao) {
             $dataTransacao = $transacao->getDataGrid();
             $dataImportacao = $transacao->getImport()->getData();

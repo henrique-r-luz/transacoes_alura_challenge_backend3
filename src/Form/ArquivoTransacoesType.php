@@ -17,7 +17,7 @@ class ArquivoTransacoesType extends AbstractType
         $builder
             // ...
             ->add('arquivo', FileType::class, [
-                'label' => 'arquivo (csv file)',
+                'label' => 'arquivo (csv ou xml file)',
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
@@ -34,14 +34,16 @@ class ArquivoTransacoesType extends AbstractType
                         'maxSize' => '1024k',
                         'mimeTypes' => [
                             'text/csv',
-                            'text/plain'
+                            'text/plain',
+                            'application/xml',
+                            'text/xml'
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid csv document. ',
-                        'disallowEmptyMessage'=>'O arquivo não pode ser vazio!'
+                        'mimeTypesMessage' => 'Please upload a valid csvou xml document. ',
+                        'disallowEmptyMessage' => 'O arquivo não pode ser vazio!'
                     ])
                 ],
             ])
-            ->add('upload', SubmitType::class,['label'=>'Upload'])
+            ->add('upload', SubmitType::class, ['label' => 'Upload'])
             //->add('limpar', ButtonType::class,['label'=>'Limpar'])
             // ...
         ;

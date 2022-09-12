@@ -18,6 +18,11 @@
             }}
           </th>
           <th scope="col">
+          {{
+            knp_pagination_sortable(services, 'Usuário', 'usuario.nome')
+          }}
+        </th>
+          <th scope="col">
             Açõa
           </th>
         </tr>
@@ -34,6 +39,9 @@
             </td>
             <td>
               {{ importe.data }}
+            </td>
+            <td>
+              {{ importe.usuario.nome }}
             </td>
             <td><a class="btn btn-info" href={{ path('import_detalhes', { 'id': importe.id }) }}>
               Detalhar

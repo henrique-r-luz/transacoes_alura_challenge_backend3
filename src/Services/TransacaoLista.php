@@ -30,10 +30,10 @@ class TransacaoLista
     }
 
 
-    public function dataProvider($request)
+    public function dataProvider($request, $id)
     {
         /**@var UserRepository */
-        $transacao = $this->doctrine->getRepository(Transacao::class)->findAll();
+        $transacao = $this->doctrine->getRepository(Transacao::class)->findBy(['import' => $id]);
         return $this->paginate(
             $transacao,
             $request

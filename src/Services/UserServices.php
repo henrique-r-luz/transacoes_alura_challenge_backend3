@@ -6,7 +6,6 @@ use Exception;
 use Throwable;
 use App\Entity\User;
 use App\Entity\Roles;
-use App\Helper\Rules;
 use App\Helper\ArulaException;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\Mailer;

@@ -9,9 +9,7 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use App\Entity\Traits\UserGetSet;
 
 #[ORM\Entity(repositoryClass: "App\Repository\UserRepository")]

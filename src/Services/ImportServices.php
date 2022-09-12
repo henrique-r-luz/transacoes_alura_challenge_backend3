@@ -8,6 +8,7 @@ use App\Entity\Transacao;
 use App\Entity\ContaBancaria;
 use App\Helper\ArulaException;
 use App\Repository\Operacoes\Operacao;
+use App\Services\FileUpload\AnalisaFileFactory;
 use App\Validacao\Import\ValidaImport;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Validacao\Import\ValidaDataTransacao;
@@ -31,11 +32,13 @@ class ImportServices
 
     public function importa($dado)
     {
-        $file = $dado->getContent();
-        $arquivo = explode(PHP_EOL, $file);
+        $tipoArquivo = AnalisaFileFactory::getObjeto($dado);
+        $arquivo = $tipoArquivo->getDados();
         $this->vetCsv = [];
+        //linhas 
         foreach ($arquivo as $line) {
-            $linhaObj = str_getcsv($line);
+            $linhaObj = $line;
+            //colunas
             foreach ($linhaObj as $colunas) {
                 //impede que valore em branco ou nulos sejam inserido
                 if ($colunas == '') {

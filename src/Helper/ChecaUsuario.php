@@ -16,9 +16,6 @@ class ChecaUsuario implements UserCheckerInterface
         if ($usuario->getAtivo() === false) {
             throw new CustomUserMessageAccountStatusException('Usuário está desativado. ');
         }
-
-        // the message passed to this exception is meant to be displayed to the user
-        // throw new CustomUserMessageAccountStatusException('Your user account no longer exists.');
     }
 
     public function checkPostAuth(UserInterface $user): void
