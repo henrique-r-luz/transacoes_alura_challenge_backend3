@@ -1,0 +1,34 @@
+{{
+  form_start(
+    form,
+    {
+      action: path('analise_index') 
+    }
+  )
+}}
+<div class="card">
+	<div class="card-header">
+		Filtra Relatório
+	</div>
+	<div class="card-body">
+		<div class="row">
+
+			<div class="col-sm-6">
+				{{ form_label(form.mes) }}
+				{{ form_widget(form.mes) }}
+				{{ form_errors(form.mes) }}
+			</div>
+			<div class="col-sm-6">
+				{{ form_label(form.ano) }}
+				{{ form_widget(form.ano) }}
+				{{ form_errors(form.ano) }}
+			</div>
+
+		</div>
+	</div>
+	<div class="card-footer">
+		{{ form_widget(form.buscar) }}
+		<a class="btn btn-secondary" href={{ path('analise_index') }}>Limpar</a>
+	</div>
+</div>
+{{ form_end(form) }}

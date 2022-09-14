@@ -17,7 +17,6 @@ class UserType extends AbstractType
             'help' => 'Nome do usuário',
             'label' => 'Nome',
             'required' => true,
-            'attr' => ['class' => 'teste']
         ])
             ->add('email', TextType::class, ['help' => 'Email do usuário'])
             ->add('salvar', SubmitType::class, ['label' => 'Salvar']);

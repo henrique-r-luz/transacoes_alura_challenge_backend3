@@ -41,13 +41,6 @@ class FileXml implements FileInterface
             ];
         }
         $this->arraydados = $vetCsv;
-        /* $vetCsv = [];
-        $arquivo = explode(PHP_EOL, $this->file->getData()->getContent());
-        foreach ($arquivo as $line) {
-            $linhaObj = str_getcsv($line);
-            $vetCsv[] = $linhaObj;
-        }
-        $this->arraydados = $vetCsv;*/
     }
     public function getDados()
     {
