@@ -31,9 +31,18 @@ class AnaliseForm extends AbstractType
                 'required' => true,
                 'placeholder' => 'selecione um mês',
                 'choices' => [
-                    'The Solar System' => 1,
-                    'Near a star' => 2,
-                    'Interstellar Space' => 3
+                    'Janeiro' => 1,
+                    'Fevereiro' => 2,
+                    'Março' => 3,
+                    'Abril' => 4,
+                    'Maio' => 5,
+                    'Junho' => 6,
+                    'Julho' => 7,
+                    'Agosto' => 8,
+                    'Setembro' => 9,
+                    'Otubro' => 10,
+                    'Novembro' => 11,
+                    'Desembro' => 12
                 ],
             ])
             ->add('buscar', SubmitType::class, ['label' => 'Buscar']);

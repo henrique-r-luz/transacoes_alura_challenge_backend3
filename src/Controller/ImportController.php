@@ -50,7 +50,7 @@ class ImportController extends AbstractController
         } catch (ArulaException $e) {
             $this->addFlash('danger', $e->getMessage());
         } catch (Throwable $e) {
-            $this->addFlash('danger', 'Ocorreu um errro não esperado');
+            $this->addFlash('danger', 'Ocorreu um errro não esperado' . $e->getMessage());
         } finally {
             return $this->renderForm('import/import.html.twig', [
                 'form' => $form,

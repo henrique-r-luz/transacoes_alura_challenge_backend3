@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
   {% include 'analise/_form.html.twig' %}
+  {% if analiseTransacoes != null %}
+    {% include 'analise/_grid-transacao.html.twig' %}
+  {% endif %}
 {% endblock %}

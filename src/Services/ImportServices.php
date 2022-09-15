@@ -94,6 +94,7 @@ class ImportServices
             $contaBancaria->setNome_banco($conta[0]);
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($contaBancaria);
+            $entityManager->flush();
         }
     }
 
