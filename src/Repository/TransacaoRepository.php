@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
-
 use App\Entity\Transacao;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\AnaliseTransacao\ContasSuspeitas;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class TransacaoRepository extends ServiceEntityRepository
@@ -28,14 +28,6 @@ class TransacaoRepository extends ServiceEntityRepository
 
         $query = $sql->getQuery();
 
-        /* echo  $query->getSQL();
-        echo $query->getParameters();
-        exit();*/
-        // $array = $query->getArrayResult();
-        //  return $array;
-        // print_r($array);
-        //exit();
-
         return $query->execute();
     }
 
@@ -43,31 +35,16 @@ class TransacaoRepository extends ServiceEntityRepository
     public function analiseContaBancaria($mes, $ano)
     {
         $valorLimiteTransacao = 1000000;
-        $contaEntrada = $this->createQueryBuilder('transacao')
-            ->select(
-                'contaDestino.nome_banco',
-                'contaDestino.agencia',
-                'contaDestino.conta',
-                'SUM(transacao.valor) total',
-                "'Entrada' tipo_operacao"
-            )
-            ->innerJoin('transacao.contaBancariaDestino', 'contaDestino')
-            //->orderBy('transacao.valor', 'DESC')
-
-            ->andWhere('YEAR(transacao.data) = :ano')
-            ->andWhere('MONTH(transacao.data) = :mes')
-            ->groupBy(
-                'contaDestino.nome_banco',
-                'contaDestino.agencia',
-                'contaDestino.conta'
-            )
-            ->having('SUM(transacao.valor) >= :valorLimite')
-            ->setParameter('valorLimite', $valorLimiteTransacao)
-            ->setParameter('ano', $ano)
-            ->setParameter('mes', $mes);
-
-        $query = $contaEntrada->getQuery();
-
-        return $query->execute();
+        $conn = $this->getEntityManager()->getConnection();
+        $contasSuspeitas = new ContasSuspeitas();
+        $stmt = $conn->prepare($contasSuspeitas->sql());
+        $resultSet = $stmt->executeQuery(
+            [
+                'limite' => $valorLimiteTransacao,
+                'ano' => $ano,
+                'mes' => $mes
+            ]
+        );
+        return $resultSet->fetchAllAssociative();
     }
 }

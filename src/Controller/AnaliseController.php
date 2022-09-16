@@ -37,12 +37,15 @@ class AnaliseController extends AbstractController
             if (count(($analiseTransacoes)) == 0) {
                 $analiseTransacoes = null;
             }
+            if (count(($analiseConta)) == 0) {
+                $analiseConta = null;
+            }
         }
 
         return $this->renderForm('analise/index.html.twig', [
             'form' => $form,
-            'analiseTransacoes' => $analiseTransacoes
-            //'services' => $importLista->dataProvider($request)
+            'analiseTransacoes' => $analiseTransacoes,
+            'analiseConta' => $analiseConta
         ]);
     }
 }
