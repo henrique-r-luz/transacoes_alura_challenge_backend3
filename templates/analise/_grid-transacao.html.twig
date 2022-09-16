@@ -3,14 +3,38 @@
     Transacões Suspeitas
   </div>
   <div class="card-body">
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover table-bordered">
       <thead>
+        <tr align="center">
+          <th rowspan="2">
+            id
+          </th>
+          <th colspan="3">
+            Origem
+          </th>
+          <th colspan="3">
+            Destino
+          </th>
+          <th rowspan="2">
+            Valor
+          </th>
+        </tr>
         <tr>
+          <th scope="col"></th>
           <th scope="col">
-            {{ knp_pagination_sortable(analiseTransacoes, 'Id', 'id') }}
+            Banco
           </th>
           <th scope="col">
-            {{ knp_pagination_sortable(analiseTransacoes, 'Valor', 'valor') }}
+            Conta
+          </th>
+          <th scope="col">
+            Banco
+          </th>
+          <th scope="col">
+            Conta
+          </th>
+          <th scope="col">
+            Agência
           </th>
         </tr>
       </thead>
@@ -20,6 +44,24 @@
           <tr>
             <td>
               {{ transacao.id }}
+            </td>
+            <td>
+              {{ transacao.contaBancariaOrigem.nome_banco }}
+            </td>
+            <td>
+              {{ transacao.contaBancariaOrigem.agencia }}
+            </td>
+            <td>
+              {{ transacao.contaBancariaOrigem.conta }}
+            </td>
+            <td>
+              {{ transacao.contaBancariaDestino.nome_banco }}
+            </td>
+            <td>
+              {{ transacao.contaBancariaDestino.agencia }}
+            </td>
+            <td>
+              {{ transacao.contaBancariaDestino.conta }}
             </td>
             <td>
               {{ transacao.valor }}
