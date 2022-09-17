@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Transacao;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\AnaliseTransacao\ContasSuspeitas;
+use App\Repository\AnaliseTransacao\AgenciaSuspeitas;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class TransacaoRepository extends ServiceEntityRepository
@@ -53,8 +54,8 @@ class TransacaoRepository extends ServiceEntityRepository
     {
         $valorLimiteTransacao = 1000000000;
         $conn = $this->getEntityManager()->getConnection();
-        $contasSuspeitas = new ContasSuspeitas();
-        $stmt = $conn->prepare($contasSuspeitas->sql());
+        $agenciaSuspeitas = new AgenciaSuspeitas();
+        $stmt = $conn->prepare($agenciaSuspeitas->sql());
         $resultSet = $stmt->executeQuery(
             [
                 'limite' => $valorLimiteTransacao,

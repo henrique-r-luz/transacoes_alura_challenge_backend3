@@ -15,7 +15,7 @@ class AgenciaSuspeitas
 
     private function contaEntrada()
     {
-        return $this->select() .
+        return $this->select('Entrada') .
             $this->from() .
             $this->joinEntrada() .
             $this->where() .
@@ -31,7 +31,7 @@ class AgenciaSuspeitas
 
     private function contaSaida()
     {
-        return $this->select() .
+        return $this->select('Saída') .
             $this->from() .
             $this->joinSaida() .
             $this->where() .
@@ -46,12 +46,12 @@ class AgenciaSuspeitas
     }
 
 
-    private function select()
+    private function select($tipo)
     {
         return "select conta_bancaria.nome_banco, " .
             "conta_bancaria.agencia, " .
             "sum(transacao.valor) total, " .
-            "'Entrada' as tipo_operacao ";
+            "'" . $tipo . "' as tipo_operacao ";
     }
 
 
