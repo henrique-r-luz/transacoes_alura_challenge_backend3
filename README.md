@@ -59,7 +59,7 @@ Sistema de análise de transações financeira proposto pelo Challenge Back-End 
  senha:123999
  ~~~
  
- Realizando o login o sistema já pode ser utilizado, segui a tela inicial do invest
+ Realizando o login o sistema já pode ser utilizado, segui a tela inicial da aplicação
  
  ![telaInicial]()
  
