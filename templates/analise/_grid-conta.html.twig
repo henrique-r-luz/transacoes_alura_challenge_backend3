@@ -37,7 +37,7 @@
               {{ transacao.conta }}
             </td>
             <td>
-              {{ transacao.total }}
+              R${{ transacao.total|number_format(2, ',', '.') }}
             </td>
             <td>
               {{ transacao.tipo_operacao }}
