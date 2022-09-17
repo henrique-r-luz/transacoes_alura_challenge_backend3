@@ -37,6 +37,22 @@ Sistema de análise de transações financeira proposto pelo Challenge Back-End 
  ~~~
  sudo docker-compose up
  ~~~ 
+ Com os contêineres ligados, acesse o app com o seguinte comando:
+ ~~~
+ docker exec -it <nome do containe app criado no seu sistema> bash
+ ~~~
+ Execute o compose para instalar as dependências
+ ~~~
+ composer install
+ ~~~
+ Execute Execute o Migrate para configurar a base de dados 
+ ~~~
+ bin/console doctrine:migrations:migrate
+ ~~~
+ Com os migrates executados os sistema está pronto para uso, acesse:
+ ~~~
+ http://localhost:81
+ ~~~
 
 
  
