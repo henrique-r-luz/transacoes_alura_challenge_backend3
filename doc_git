@@ -1,0 +1,22 @@
+
+1-> clonar repositório
+git clone https://github.com/henrique-r-luz/transacoes_alura_challenge_backend3.git
+
+2-> entre na pasta do porjeto 
+cd transacoes_alura_challenge_backend3
+
+3->execute o docker-compose
+sudo docker-compose up  
+
+4-> acesse o container app
+sudo docker exec -it <container>  bash
+
+5-> execute o composer 
+composer install
+
+6-> execute os migrate 
+bin/console doctrine:migrations:migrate
+
+7-> acesse a aplicação no seguinte endereço : http:localhost:81
+
+8 -> ao cria um novo usuário na aplicação um email com a senha de acesso é enviado. Com isso, para facilitar o desenvolvimento e os teste foi utilizado o mailhog, para verificar os email enviados. A aplicação se encontra no seguinte endereço: localhost:8025
