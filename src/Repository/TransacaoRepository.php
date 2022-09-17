@@ -47,4 +47,21 @@ class TransacaoRepository extends ServiceEntityRepository
         );
         return $resultSet->fetchAllAssociative();
     }
+
+
+    public function analiseAgencia($mes, $ano)
+    {
+        $valorLimiteTransacao = 1000000000;
+        $conn = $this->getEntityManager()->getConnection();
+        $contasSuspeitas = new ContasSuspeitas();
+        $stmt = $conn->prepare($contasSuspeitas->sql());
+        $resultSet = $stmt->executeQuery(
+            [
+                'limite' => $valorLimiteTransacao,
+                'ano' => $ano,
+                'mes' => $mes
+            ]
+        );
+        return $resultSet->fetchAllAssociative();
+    }
 }

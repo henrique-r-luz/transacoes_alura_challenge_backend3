@@ -3,7 +3,7 @@
 namespace App\Repository\AnaliseTransacao;
 
 
-class ContasSuspeitas
+class AgenciaSuspeitas
 {
 
 
@@ -15,7 +15,7 @@ class ContasSuspeitas
 
     private function contaEntrada()
     {
-        return $this->select('Entrada') .
+        return $this->select() .
             $this->from() .
             $this->joinEntrada() .
             $this->where() .
@@ -31,7 +31,7 @@ class ContasSuspeitas
 
     private function contaSaida()
     {
-        return $this->select('Saída') .
+        return $this->select() .
             $this->from() .
             $this->joinSaida() .
             $this->where() .
@@ -46,13 +46,12 @@ class ContasSuspeitas
     }
 
 
-    private function select($tipo)
+    private function select()
     {
         return "select conta_bancaria.nome_banco, " .
             "conta_bancaria.agencia, " .
-            "conta_bancaria.conta, " .
             "sum(transacao.valor) total, " .
-            "'" . $tipo . "' as tipo_operacao ";
+            "'Entrada' as tipo_operacao ";
     }
 
 
@@ -72,7 +71,6 @@ class ContasSuspeitas
     private function groupBy()
     {
         return "group by conta_bancaria.agencia, " .
-            "conta_bancaria.conta, " .
             "conta_bancaria.nome_banco, " .
             "tipo_operacao ";
     }

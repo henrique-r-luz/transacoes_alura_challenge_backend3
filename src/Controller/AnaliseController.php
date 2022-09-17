@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Analise;
 use App\Form\AnaliseForm;
+use App\Services\AnaliseAgenciaLista;
 use App\Services\AnaliseTransacoesLista;
 use App\Services\AnaliseTransacoesContaLista;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +17,8 @@ class AnaliseController extends AbstractController
     public function index(
         Request $request,
         AnaliseTransacoesLista $analiseTransacoesLista,
-        AnaliseTransacoesContaLista $analiseTransacoesContaLista
+        AnaliseTransacoesContaLista $analiseTransacoesContaLista,
+        AnaliseAgenciaLista  $analiseAgenciaLista,
     ) {
         $analiseTransacoes = null;
         $analiseConta = null;
@@ -34,18 +36,27 @@ class AnaliseController extends AbstractController
             $analiseTransacoesContaLista->setMes($analise->mes);
             $analiseConta = $analiseTransacoesContaLista->dataProvider($request);
 
+            $analiseAgenciaLista->setAno($analise->ano);
+            $analiseAgenciaLista->setMes($analise->mes);
+            $analiseAgencia  =  $analiseAgenciaLista->dataProvider($request);
+
             if (count(($analiseTransacoes)) == 0) {
                 $analiseTransacoes = null;
             }
             if (count(($analiseConta)) == 0) {
                 $analiseConta = null;
             }
+
+            if (count(($analiseAgencia)) == 0) {
+                $analiseAgencia = null;
+            }
         }
 
         return $this->renderForm('analise/index.html.twig', [
             'form' => $form,
             'analiseTransacoes' => $analiseTransacoes,
-            'analiseConta' => $analiseConta
+            'analiseConta' => $analiseConta,
+            'analiseAgencia' => $analiseAgencia
         ]);
     }
 }

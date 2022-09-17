@@ -1,0 +1,57 @@
+<div class="card" style="margin-top:10px;">
+  <div class="card-header">
+    Agencia Suspeitas
+  </div>
+  <div class="card-body">
+    <table class="table table-striped table-hover table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">
+            Banco
+          </th>
+          <th scope="col">
+            Agência
+          </th>
+          <th scope="col">
+            Valor
+          </th>
+          <th scope="col">
+            Tipo Movimentação
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {# table body #}
+        {% for transacao in analiseAgencia %}
+          <tr>
+            <td>
+              {{ transacao.nome_banco }}
+            </td>
+            <td>
+              {{ transacao.agencia }}
+            </td>
+            <td>
+              {{ transacao.total }}
+            </td>
+            <td>
+              {{ transacao.tipo_operacao }}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="row">
+      <div class="col">
+        <div class="pagination mt-3 d-flex justify-content-center">
+          {{
+            knp_pagination_render(
+              analiseAgencia,
+              '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig'
+            )
+          }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

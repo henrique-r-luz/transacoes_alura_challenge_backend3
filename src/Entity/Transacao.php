@@ -30,7 +30,7 @@ class Transacao
     #[ORM\JoinColumn(name: 'import_id')]
     private  $import;
 
-    #[ORM\Column(type: "decimal", precision: 8, scale: 2)]
+    #[ORM\Column(type: "decimal", precision: 15, scale: 4)]
     private $valor;
     #[ORM\Column(type: "datetime")]
     private $data;
