@@ -67,7 +67,8 @@ Quando se cria um novo usuário no sistema é enviado para o email desse a senha
  ~~~
  localhost:8025  
  ~~~
- 
+ ![mailhog](https://user-images.githubusercontent.com/12544898/190865947-fbfc920c-05dd-48a6-b21c-9653a8199905.png)
+
  
  
  
