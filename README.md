@@ -13,7 +13,7 @@ Sistema de análise de transações financeiras proposto pelo Challenge Back-End
  - Controle de acesso.
  - Análise de transações suspeitas.
 
- ## Pré-requisito
+## Pré-requisito
    - Git
    - Docker
    - Docker-compose
@@ -27,51 +27,49 @@ Sistema de análise de transações financeiras proposto pelo Challenge Back-End
 - ``PostgresSql``
 
 ## Instalação
- Baixar o projeto no github.
- ~~~
- git clone https://github.com/henrique-r-luz/transacoes_alura_challenge_backend3.git
- ~~~ 
- Após a conclusão do download entre na pasta transacoes_alura_challenge_backend3 e execute o comando abaixo.
- Esse processo pode levar alguns minutos porque o docker irá criar e configurar
- cada container. 
- ~~~
- sudo docker-compose up
- ~~~ 
- Com os contêineres ligados, acesse o app com o seguinte comando:
- ~~~
- docker exec -it <nome do container app criado no seu sistema> bash
- ~~~
- Execute o compose para instalar as dependências
- ~~~
- composer install
- ~~~
- Execute Execute o Migrate para configurar a base de dados 
- ~~~
- bin/console doctrine:migrations:migrate
- ~~~
- Com os migrates executados os sistema está pronto para uso, acesse:
- ~~~
- http://localhost:81
- ~~~
- Aparecerá a tela de login
- ~~~
- login:admin@email.com.br
- senha:123999
- ~~~
+Baixar o projeto no github.
+~~~
+git clone https://github.com/henrique-r-luz/transacoes_alura_challenge_backend3.git
+~~~ 
+Após a conclusão do download entre na pasta transacoes_alura_challenge_backend3 e execute o comando abaixo.
+Esse processo pode levar alguns minutos porque o docker irá criar e configurar
+cada container. 
+~~~
+sudo docker-compose up
+~~~ 
+Com os contêineres ligados, acesse o app com o seguinte comando:
+~~~
+docker exec -it <nome do container app criado no seu sistema> bash
+~~~
+Execute o compose para instalar as dependências
+~~~
+composer install
+~~~
+Execute Execute o Migrate para configurar a base de dados 
+~~~
+bin/console doctrine:migrations:migrate
+~~~
+Com os migrates executados os sistema está pronto para uso, acesse:
+~~~
+http://localhost:81
+~~~
+Aparecerá a tela de login
+~~~
+login:admin@email.com.br
+senha:123999
+~~~
  
- Realizando o login o sistema já pode ser utilizado, segui a tela inicial da aplicação
+Realizando o login o sistema já pode ser utilizado, segui a tela inicial da aplicação
  
- ![telainicial](https://user-images.githubusercontent.com/12544898/190865747-0776b738-df9f-4be2-9abc-30fe45701eef.png)
+![telainicial](https://user-images.githubusercontent.com/12544898/190865747-0776b738-df9f-4be2-9abc-30fe45701eef.png)
  
 Quando se cria um novo usuário no sistema é enviado para o email desse a senha de acesso. Com isso, para facilitar o desenvolvimento e os testes foi utilizado o mailhog, para verificar os email enviados. A aplicação se encontra no seguinte endereço: 
- ~~~
- localhost:8025  
- ~~~
- ![mailhog](https://user-images.githubusercontent.com/12544898/190865947-fbfc920c-05dd-48a6-b21c-9653a8199905.png)
+~~~
+localhost:8025  
+~~~
+![mailhog](https://user-images.githubusercontent.com/12544898/190865947-fbfc920c-05dd-48a6-b21c-9653a8199905.png)
 
  
- 
- 
-  ## Autor
+## Autor
 
  [<img src="https://user-images.githubusercontent.com/12544898/174133076-fc3467c3-3908-436f-af3d-2635e4312180.png" width=115><br><sub>Henrique Rodrigues Luz</sub>](https://github.com/henrique-r-luz) 
