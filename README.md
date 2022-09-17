@@ -26,5 +26,17 @@ Sistema de análise de transações financeira proposto pelo Challenge Back-End 
 - ``Twig``
 - ``PostgresSql``
 
+## Instalação
+ Baixar o projeto no github.
+ ~~~
+ git clone https://github.com/henrique-r-luz/transacoes_alura_challenge_backend3.git
+ ~~~ 
+ Após a conclusão do download entre na pasta transacoes_alura_challenge_backend3 e execute o comando abaixo.
+ Esse processo pode levar alguns minutos porque o docker irá criar e configurar
+ cada container. 
+ ~~~
+ sudo docker-compose up
+ ~~~ 
+
 
  
