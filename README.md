@@ -53,6 +53,11 @@ Sistema de análise de transações financeira proposto pelo Challenge Back-End 
  ~~~
  http://localhost:81
  ~~~
+ Aparecerá a tela de login
+ ~~~
+ login:admin@email.com.br
+ senha:123999
+ ~~~
 
 
  
