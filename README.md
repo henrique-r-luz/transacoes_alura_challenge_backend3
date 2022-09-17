@@ -13,5 +13,18 @@ Sistema de análise de transações financeira proposto pelo Challenge Back-End 
  - Controle de acesso.
  - Análise de transações suspeitas.
 
+ ## Pré-requisito
+   - Git
+   - Docker
+   - Docker-compose
+
+## Tecnologias utilizadas
+
+- ``PHP 8``
+- ``Symfony 6``
+- ``Bootstrap 5``
+- ``Twig``
+- ``PostgresSql``
+
 
  
