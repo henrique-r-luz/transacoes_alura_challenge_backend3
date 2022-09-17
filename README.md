@@ -14,9 +14,9 @@ Sistema de análise de transações financeiras proposto pelo Challenge Back-End
 - Análise de transações suspeitas.
 
 ## Pré-requisito
-   - Git
-   - Docker
-   - Docker-compose
+- Git
+- Docker
+- Docker-compose
 
 ## Tecnologias utilizadas
 
