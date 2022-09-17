@@ -6,12 +6,12 @@
 
 Sistema de análise de transações financeiras proposto pelo Challenge Back-End 3 da Arula. O sistema possui as seguintes funcionalidade :
 
- - Importação de transações no formato csv e xml.
- - Detalhamento das transações importadas.
- - Cadastro de usuário.
- - Envio de senha pelo email
- - Controle de acesso.
- - Análise de transações suspeitas.
+- Importação de transações no formato csv e xml.
+- Detalhamento das transações importadas.
+- Cadastro de usuário.
+- Envio de senha pelo email
+- Controle de acesso.
+- Análise de transações suspeitas.
 
 ## Pré-requisito
    - Git
