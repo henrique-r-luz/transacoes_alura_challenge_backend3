@@ -61,7 +61,12 @@ Sistema de análise de transações financeira proposto pelo Challenge Back-End 
  
  Realizando o login o sistema já pode ser utilizado, segui a tela inicial da aplicação
  
- ![telaInicial]()
+ ![telainicial](https://user-images.githubusercontent.com/12544898/190865747-0776b738-df9f-4be2-9abc-30fe45701eef.png)
+ 
+Quando se cria um novo usuário no sistema é enviado para o email desse a senha de acesso. Com isso, para facilitar o desenvolvimento e os testes foi utilizado o mailhog, para verificar os email enviados. A aplicação se encontra no seguinte endereço: 
+ ~~~
+ localhost:8025  
+ ~~~
  
  
  
