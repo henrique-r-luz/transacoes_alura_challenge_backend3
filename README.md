@@ -58,6 +58,13 @@ Sistema de análise de transações financeira proposto pelo Challenge Back-End 
  login:admin@email.com.br
  senha:123999
  ~~~
+ 
+ 
+ 
+  ## Autor
+
+ [<img src="https://user-images.githubusercontent.com/12544898/174133076-fc3467c3-3908-436f-af3d-2635e4312180.png" width=115><br><sub>Henrique Rodrigues Luz</sub>](https://github.com/henrique-r-luz) 
+
 
 
  
