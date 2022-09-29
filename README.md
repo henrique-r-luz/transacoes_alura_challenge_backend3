@@ -45,7 +45,7 @@ Execute o compose para instalar as dependências
 ~~~
 composer install
 ~~~
-Execute Execute o Migrate para configurar a base de dados 
+Execute o Migrate para configurar a base de dados 
 ~~~
 bin/console doctrine:migrations:migrate
 ~~~
