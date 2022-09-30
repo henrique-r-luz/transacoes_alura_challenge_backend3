@@ -49,7 +49,7 @@ Execute o Migrate para configurar a base de dados
 ~~~
 bin/console doctrine:migrations:migrate
 ~~~
-Com os migrates executados os sistema está pronto para uso, acesse:
+Com os migrates executados o sistema está pronto para uso, acesse:
 ~~~
 http://localhost:81
 ~~~
