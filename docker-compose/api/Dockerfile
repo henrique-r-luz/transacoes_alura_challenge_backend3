@@ -30,6 +30,8 @@ RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
-WORKDIR /var/www
-ENTRYPOINT ["php-fpm"]
 
+WORKDIR /var/www
+
+ENTRYPOINT ["php-fpm"]
+#EXPOSE 9000
