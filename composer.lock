@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c64e997e879632bd25fe5fa7e2be9dc",
+    "content-hash": "5426a8e54b778217bc6a6a269bd82c24",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -7492,16 +7492,16 @@
         },
         {
             "name": "symfony/validator",
-            "version": "v6.0.12",
+            "version": "v6.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/validator.git",
-                "reference": "0987eb0c390d5686768ea2bb388c81494ea4508f"
+                "reference": "a8d3aa40bb0180c062a73d125d72f150d67d3f1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/validator/zipball/0987eb0c390d5686768ea2bb388c81494ea4508f",
-                "reference": "0987eb0c390d5686768ea2bb388c81494ea4508f",
+                "url": "https://api.github.com/repos/symfony/validator/zipball/a8d3aa40bb0180c062a73d125d72f150d67d3f1f",
+                "reference": "a8d3aa40bb0180c062a73d125d72f150d67d3f1f",
                 "shasum": ""
             },
             "require": {
@@ -7580,7 +7580,7 @@
             "description": "Provides tools to validate values",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/validator/tree/v6.0.12"
+                "source": "https://github.com/symfony/validator/tree/v6.0.13"
             },
             "funding": [
                 {
@@ -7596,7 +7596,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-12T13:08:57+00:00"
+            "time": "2022-09-17T07:39:16+00:00"
         },
         {
             "name": "symfony/var-dumper",
@@ -10097,16 +10097,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.45.0",
+            "version": "v1.46.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "7ae4ff28ac1b6d6d55591999026040d58b8a3967"
+                "reference": "682ce4fc6602acad33653ba0194d922356fd81f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/7ae4ff28ac1b6d6d55591999026040d58b8a3967",
-                "reference": "7ae4ff28ac1b6d6d55591999026040d58b8a3967",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/682ce4fc6602acad33653ba0194d922356fd81f9",
+                "reference": "682ce4fc6602acad33653ba0194d922356fd81f9",
                 "shasum": ""
             },
             "require": {
@@ -10170,7 +10170,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/maker-bundle/issues",
-                "source": "https://github.com/symfony/maker-bundle/tree/v1.45.0"
+                "source": "https://github.com/symfony/maker-bundle/tree/v1.46.0"
             },
             "funding": [
                 {
@@ -10186,7 +10186,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-26T12:31:45+00:00"
+            "time": "2022-09-23T13:30:21+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
