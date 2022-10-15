@@ -2,34 +2,12 @@ version: "3.7"
 services:
 
   app:
-    build:
-      context: ./docker-compose/php
-      dockerfile: Dockerfile
-    image: php
+    image: henriquerluz/php-fpm:1.0.0
     working_dir: /var/www/
-    #ports:
-    #  - "9002:9000"
     volumes:
       - ./:/var/www
       - ./docker-compose/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - ./docker-compose/php/php.ini:/usr/local/etc/php/php.ini
-    networks:
-      - rede
-
-  api:
-    build:
-      context: ./docker-compose/api
-      dockerfile: Dockerfile
-    image: php_api
-    working_dir: /var/www/
-    ports:
-      - "7001:7001"
-    volumes:
-      - ./api:/var/www
-      - ./docker-compose/api/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-      - ./docker-compose/api/php.ini:/usr/local/etc/php/php.ini
-      - ./docker-compose/api/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker-compose/api/zz-docker.conf/:/usr/local/etc/php-fpm.d/zz-docker.conf
     networks:
       - rede
 
@@ -57,17 +35,15 @@ services:
     image: apache
     depends_on:
       - app
-      - api
     networks:
       - rede
     ports:
       - "81:80"
-      - "8080:8080"
     volumes:
       - ./:/var/www
       - ./docker-compose/apache/demo.apache.conf:/etc/apache2/sites-available/demo.apache.conf
       - ./docker-compose/apache/apache.conf:/etc/apache2/apache.conf
-      - ./docker-compose/apache/sources.list:/etc/apt/sources.list
+      #- ./docker-compose/apache/sources.list:/etc/apt/sources.list
       - ./docker-compose/apache/ports.conf:/etc/apache2/ports.conf
 
   mailhog:

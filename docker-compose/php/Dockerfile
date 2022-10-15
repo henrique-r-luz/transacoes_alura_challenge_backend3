@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     python3-pip \
+    composer \
     vim
     
 
@@ -21,12 +22,12 @@ RUN apt-get update && apt-get install -y \
 # Limpando o cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
+#RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
+#RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
 # Instalando Extensões PHP
 #RUN docker-php-ext-install curl gd intl mbstring opcache pdo_pgsql xml zip
 RUN docker-php-ext-install curl gd intl mbstring opcache pdo_pgsql zip
-
-RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
-RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 

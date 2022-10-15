@@ -97,7 +97,7 @@
           {{ tran.contaBancariaDestino.conta }}
         </td>
         <td>
-          {{ tran.valor }}
+          R${{ tran.valor|number_format(2, ',', '.') }}
         </td>
       </tr>
     {% endfor %}
